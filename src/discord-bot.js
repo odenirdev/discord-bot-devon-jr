@@ -2,6 +2,8 @@ const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 
+const { DeployCommands } = require("./deploy-commands");
+
 function DiscordBot() {
   this.client = new Client({
     intents: [
@@ -17,12 +19,14 @@ function DiscordBot() {
 
     this.handleMessages();
 
+    new DeployCommands().run();
+
     this.login();
   };
 
   this.login = () => {
     this.client.once("ready", async (c) => {
-      console.log(`🔥 Ready! Logged in as ${c.user.tag}`);
+      console.log(`🔥[discord-bot]: Logged in as ${c.user.tag}`);
     });
 
     this.client.login(process.env.TOKEN);
