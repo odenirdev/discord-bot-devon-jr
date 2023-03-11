@@ -45,7 +45,14 @@ function DiscordBot() {
       const command = require(filePath);
 
       if ("data" in command && "execute" in command) {
-        this.client.commands.set(command.data.name, command);
+        this.client.commands.set(command.data.name, {
+          ...command,
+          execute: (interaction) => {
+            return command.execute(interaction, this.client);
+          },
+        });
+
+        // this.client.commands.set(command.data.name, command);
       } else {
         console.error(
           `Esse comando ${filePath} está com "data" ou "execute" ausentes`

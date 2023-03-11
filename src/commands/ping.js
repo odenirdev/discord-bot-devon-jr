@@ -6,7 +6,7 @@ function PingCommand() {
     .setDescription("Pong!")
     .toJSON();
 
-  this.execute = async (interaction) => {
+  this.execute = async (interaction, client) => {
     await interaction.reply({ content: "Pong!", ephemeral: true });
   };
 }
